@@ -1,0 +1,8 @@
+*.sql
+db.sqlite3
+*.env
+__pycache__/
+*.pyc
+*.cpython-36.pyc
+venv/
+.vscode/
