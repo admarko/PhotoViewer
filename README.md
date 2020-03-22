@@ -4,8 +4,8 @@ To start:
 - clone the repo and `cd` into it
 - run `source venv/bin/activate` (todo: change this to requirements.txt)
 - run `python manage.py runserver`
-- in a new terminal tab, `cd` into `/frontend` and run `npm run dev`
-- navigate to http://127.0.0.1:8000/
+- in a new terminal tab, `cd` into `/frontend` and run `npm start`
+- navigate to http://localhost:3000/
 
 Some tools I used for the project:
 
