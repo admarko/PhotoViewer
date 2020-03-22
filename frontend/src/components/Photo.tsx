@@ -4,15 +4,17 @@ type Props = {
   url: string;
   height: number;
   width: number;
-  photo_id: number;
+  photoId: Number;
 };
 
 export default function Photo(props: Props) {
-  const { url, height, width, photo_id } = props;
-
+  const { url, height, width, photoId } = props;
   return (
     <div>
-      <img src={url} alt={""}></img>
+      <img src={url} alt={""} />
+      <p>
+        {height}, {width}, {photoId}{" "}
+      </p>
     </div>
   );
 }

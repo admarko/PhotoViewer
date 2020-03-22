@@ -19,3 +19,4 @@ TODO:
 - turn off api view in settings
 - add validation on frontend checking
 - change all 404 pages
+- pagination
