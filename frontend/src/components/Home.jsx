@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Photo from "./Photo";
 
 import axios from "axios";
 import Switch from "react-switch";
+
+import Photo from "./Photo";
 
 import { API_URL } from "../constants";
 
