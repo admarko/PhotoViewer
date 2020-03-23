@@ -1,4 +1,4 @@
 linter:
   eslint:
-    dir: "src/"
+    dir: "frontend/src/"
     ext: ".js,.jsx, .ts, .tsx"
