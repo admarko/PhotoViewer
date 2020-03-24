@@ -13,7 +13,7 @@ export default function Home() {
   const [pageNum, setPageNum] = useState(1);
 
   function fetchPhotos() {
-    const pageURL = "?page=" + pageNum;
+    const pageURL = `?page=${pageNum}`;
     axios
       .get(API_URL + pageURL)
       .then(res =>
@@ -50,13 +50,13 @@ export default function Home() {
 
   const picsPerPage = 10;
   const numPages = data.count / picsPerPage;
-  let pageLinks = [];
-  for (let i = 1; i < numPages + 1; i++) {
+  const pageLinks = [];
+  for (let i = 1; i < numPages + 1; i += 1) {
     pageLinks.push(i);
   }
 
-  function PageScroll(pageNum) {
-    const currentPageNum = pageNum.pageNum;
+  function PageScroll(currPage) {
+    const currentPageNum = currPage.pageNum;
     if (currentPageNum === 1) {
       return (
         <span onClick={() => setPageNum(currentPageNum + 1)}>Next Page</span>
@@ -65,14 +65,13 @@ export default function Home() {
       return (
         <span onClick={() => setPageNum(currentPageNum - 1)}>Prev Page</span>
       );
-    } else {
-      return (
-        <div>
-          <span onClick={() => setPageNum(currentPageNum - 1)}>Prev Page</span>{" "}
-          <span onClick={() => setPageNum(currentPageNum + 1)}>Next Page</span>
-        </div>
-      );
     }
+    return (
+      <div>
+        <span onClick={() => setPageNum(currentPageNum - 1)}>Prev Page</span>{" "}
+        <span onClick={() => setPageNum(currentPageNum + 1)}>Next Page</span>
+      </div>
+    );
   }
 
   return (
@@ -85,7 +84,7 @@ export default function Home() {
         {pageLinks.map(pageLink => {
           return (
             <span onClick={() => setPageNum(pageLink)} key={pageLink}>
-              {pageLink + " "}
+              {`pageLink `}
             </span>
           );
         })}
@@ -93,7 +92,6 @@ export default function Home() {
       {getPhotos()}
       <div>
         <PageScroll pageNum={pageNum} />
-        DELETE THIS
       </div>
     </div>
   );
