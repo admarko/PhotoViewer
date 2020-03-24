@@ -93,6 +93,7 @@ export default function Home() {
       {getPhotos()}
       <div>
         <PageScroll pageNum={pageNum} />
+        DELETE THIS
       </div>
     </div>
   );
