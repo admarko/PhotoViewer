@@ -35,6 +35,7 @@ class PhotosList(APIView, PaginationHandlerMixin):
 
     def get(self, request, *args, **kwargs):
         photos = Photo.objects.all()
+        self.pagination_class.page_size = 3
         page = self.paginate_queryset(photos)
         if page is not None:
             serializer = self.get_paginated_response(

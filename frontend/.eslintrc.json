@@ -1,5 +1,5 @@
 {
-  "extends": ["plugin:react/recommended", "plugin:import/typescript"],
+  "extends": ["plugin:react/recommended", "plugin:import/typescript"], //airbnb
   "env": {
     "browser": true,
     "es6": true,

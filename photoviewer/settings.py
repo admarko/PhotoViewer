@@ -59,7 +59,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 # TODO: uncomment this to turn off api view
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
-    "PAGE_SIZE": 10
     #     'DEFAULT_RENDERER_CLASSES': (
     #         'rest_framework.renderers.JSONRenderer',
     #     )
