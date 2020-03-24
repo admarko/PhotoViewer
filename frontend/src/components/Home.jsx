@@ -13,6 +13,13 @@ export default function Home() {
   const [pageNum, setPageNum] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
+  const pageSizeOptions = [10, 20, 30, 40, 50];
+  const numPages = Math.ceil(data.count / pageSize);
+  const pageLinks = [];
+  for (let i = 1; i < numPages + 1; i += 1) {
+    pageLinks.push(i);
+  }
+
   function fetchPhotos() {
     const pageURL = `?page=${pageNum}&pageSize=${pageSize}`;
     axios
@@ -28,6 +35,15 @@ export default function Home() {
 
   function toggleColor() {
     setColor(!color);
+  }
+
+  function handlePageChange(selectedPageNum) {
+    setPageNum(selectedPageNum);
+  }
+
+  function handlePageSizeChange(e) {
+    setPageNum(1);
+    setPageSize(e.target.value);
   }
 
   function getPhotos() {
@@ -49,30 +65,29 @@ export default function Home() {
     );
   }
 
-  const pageSizeOptions = [10, 20, 30, 40, 50];
-  const picsPerPage = pageSize;
-  const numPages = Math.floor(data.count / picsPerPage);
-  const pageLinks = [];
-  for (let i = 1; i < numPages + 1; i += 1) {
-    pageLinks.push(i);
-  }
-
   function PageScroll(currPage) {
     const currentPageNum = currPage.pageNum;
-    console.log(currentPageNum, numPages);
     if (currentPageNum === 1) {
       return (
-        <span onClick={() => setPageNum(currentPageNum + 1)}>Next Page</span>
+        <span onClick={() => handlePageChange(currentPageNum + 1)}>
+          Next Page
+        </span>
       );
     } else if (currentPageNum === numPages) {
       return (
-        <span onClick={() => setPageNum(currentPageNum - 1)}>Prev Page</span>
+        <span onClick={() => handlePageChange(currentPageNum - 1)}>
+          Prev Page
+        </span>
       );
     }
     return (
       <div>
-        <span onClick={() => setPageNum(currentPageNum - 1)}>Prev Page</span>{" "}
-        <span onClick={() => setPageNum(currentPageNum + 1)}>Next Page</span>
+        <span onClick={() => handlePageChange(currentPageNum - 1)}>
+          Prev Page
+        </span>{" "}
+        <span onClick={() => handlePageChange(currentPageNum + 1)}>
+          Next Page
+        </span>
       </div>
     );
   }
@@ -83,26 +98,22 @@ export default function Home() {
         <Switch onChange={toggleColor} checked={color} />
       </div>
       <div>
-        Pics per page:{" "}
-        {pageSizeOptions.map(option => {
-          return (
-            <span
-              onClick={() => {
-                setPageSize(option);
-                setPageNum(1);
-              }}
-              key={option}
-            >
-              {`${option} `}
-            </span>
-          );
-        })}
+        <label htmlFor="picsPerPage">Pics per page:</label>
+        <select id="picsPerPage" onChange={handlePageSizeChange}>
+          {pageSizeOptions.map(pageSize => {
+            return (
+              <option value={pageSize} key={pageSize}>
+                {pageSize}
+              </option>
+            );
+          })}
+        </select>
       </div>
       <div>
         Page:{" "}
         {pageLinks.map(pageLink => {
           return (
-            <span onClick={() => setPageNum(pageLink)} key={pageLink}>
+            <span onClick={() => handlePageChange(pageLink)} key={pageLink}>
               {`${pageLink} `}
             </span>
           );
