@@ -10,7 +10,7 @@ from .serializers import PhotoSerializer
 
 
 class BasicPagination(PageNumberPagination):
-    page_size_query_param = "limit"
+    page_size_query_param = "pageSize"
 
 
 # DEPRICATED:

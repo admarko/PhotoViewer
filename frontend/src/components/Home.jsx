@@ -11,9 +11,10 @@ export default function Home() {
   const [data, setData] = useState({ photos: [], count: 0 });
   const [color, setColor] = useState(true);
   const [pageNum, setPageNum] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   function fetchPhotos() {
-    const pageURL = `?page=${pageNum}`;
+    const pageURL = `?page=${pageNum}&pageSize=${pageSize}`;
     axios
       .get(API_URL + pageURL)
       .then(res =>
@@ -23,7 +24,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchPhotos();
-  }, [pageNum]);
+  }, [pageSize, pageNum]);
 
   function toggleColor() {
     setColor(!color);
@@ -48,8 +49,9 @@ export default function Home() {
     );
   }
 
-  const picsPerPage = 10;
-  const numPages = data.count / picsPerPage;
+  const pageSizeOptions = [10, 20, 30, 40, 50];
+  const picsPerPage = pageSize;
+  const numPages = Math.floor(data.count / picsPerPage);
   const pageLinks = [];
   for (let i = 1; i < numPages + 1; i += 1) {
     pageLinks.push(i);
@@ -57,6 +59,7 @@ export default function Home() {
 
   function PageScroll(currPage) {
     const currentPageNum = currPage.pageNum;
+    console.log(currentPageNum, numPages);
     if (currentPageNum === 1) {
       return (
         <span onClick={() => setPageNum(currentPageNum + 1)}>Next Page</span>
@@ -80,19 +83,37 @@ export default function Home() {
         <Switch onChange={toggleColor} checked={color} />
       </div>
       <div>
-        Page{" "}
+        Pics per page:{" "}
+        {pageSizeOptions.map(option => {
+          return (
+            <span
+              onClick={() => {
+                setPageSize(option);
+                setPageNum(1);
+              }}
+              key={option}
+            >
+              {`${option} `}
+            </span>
+          );
+        })}
+      </div>
+      <div>
+        Page:{" "}
         {pageLinks.map(pageLink => {
           return (
             <span onClick={() => setPageNum(pageLink)} key={pageLink}>
-              {`pageLink `}
+              {`${pageLink} `}
             </span>
           );
         })}
       </div>
       {getPhotos()}
-      <div>
-        <PageScroll pageNum={pageNum} />
-      </div>
+      {numPages !== 1 && (
+        <div>
+          <PageScroll pageNum={pageNum} />
+        </div>
+      )}
     </div>
   );
 }
