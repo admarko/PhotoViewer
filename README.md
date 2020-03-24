@@ -9,7 +9,8 @@ To start:
 
 Some tools I used for the project:
 
-- pre-commit hooks (for black and isort)
+- pre-commit hooks (for black and flake8)
+- isort (run `isort -rc .` to correct import order)
 - Sider (online code linter that integrats with github)
 - Refined GitHub (Chrome extension that enables some shortcuts with git)
 
@@ -19,4 +20,3 @@ TODO:
 - turn off api view in settings
 - add validation on frontend checking
 - change all 404 pages
-- pagination
