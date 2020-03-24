@@ -25,13 +25,13 @@ export default function Home() {
     axios
       .get(API_URL + pageURL)
       .then(res =>
-        setData({ photos: res.data.results, count: res.data.count })
+        setData({ photos: res.data.results, count: res.data.count }),
       );
   }
 
   useEffect(() => {
     fetchPhotos();
-  }, [pageSize, pageNum]);
+  }, [pageSize, pageNum]); // eslint-disable-line
 
   function toggleColor() {
     setColor(!color);
@@ -50,17 +50,15 @@ export default function Home() {
     const grayscaleURL = color ? "" : "?grayscale";
     return (
       <div>
-        {data.photos.map(photo => {
-          return (
-            <Photo
-              key={photo.photo_id + photo.height + photo.width}
-              url={photo.url + grayscaleURL}
-              height={photo.height}
-              width={photo.width}
-              photoId={photo.photo_id}
-            />
-          );
-        })}
+        {data.photos.map(photo => (
+          <Photo
+            key={photo.photo_id + photo.height + photo.width}
+            url={photo.url + grayscaleURL}
+            height={photo.height}
+            width={photo.width}
+            photoId={photo.photo_id}
+          />
+        ))}
       </div>
     );
   }
@@ -73,7 +71,8 @@ export default function Home() {
           Next Page
         </span>
       );
-    } else if (currentPageNum === numPages) {
+    }
+    if (currentPageNum === numPages) {
       return (
         <span onClick={() => handlePageChange(currentPageNum - 1)}>
           Prev Page
@@ -98,26 +97,22 @@ export default function Home() {
         <Switch onChange={toggleColor} checked={color} />
       </div>
       <div>
-        <label htmlFor="picsPerPage">Pics per page:</label>
+        <span htmlFor="picsPerPage">Pics per page: </span>
         <select id="picsPerPage" onChange={handlePageSizeChange}>
-          {pageSizeOptions.map(picsPerPage => {
-            return (
-              <option value={picsPerPage} key={picsPerPage}>
-                {picsPerPage}
-              </option>
-            );
-          })}
+          {pageSizeOptions.map(picsPerPage => (
+            <option value={picsPerPage} key={picsPerPage}>
+              {picsPerPage}
+            </option>
+          ))}
         </select>
       </div>
       <div>
         Page:{" "}
-        {pageLinks.map(pageLink => {
-          return (
-            <span onClick={() => handlePageChange(pageLink)} key={pageLink}>
-              {`${pageLink} `}
-            </span>
-          );
-        })}
+        {pageLinks.map(pageLink => (
+          <span onClick={() => handlePageChange(pageLink)} key={pageLink}>
+            {`${pageLink} `}
+          </span>
+        ))}
       </div>
       {getPhotos()}
       {numPages !== 1 && (
