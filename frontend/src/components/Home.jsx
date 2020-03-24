@@ -100,10 +100,10 @@ export default function Home() {
       <div>
         <label htmlFor="picsPerPage">Pics per page:</label>
         <select id="picsPerPage" onChange={handlePageSizeChange}>
-          {pageSizeOptions.map(pageSize => {
+          {pageSizeOptions.map(picsPerPage => {
             return (
-              <option value={pageSize} key={pageSize}>
-                {pageSize}
+              <option value={picsPerPage} key={picsPerPage}>
+                {picsPerPage}
               </option>
             );
           })}
