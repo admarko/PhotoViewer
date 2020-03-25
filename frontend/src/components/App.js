@@ -1,9 +1,7 @@
 import React from "react";
-import Home from "./Home.tsx";
+import Home from "./Home.tsx"; // eslint-disable-line import/extensions
 import "./__styles__/App.scss";
 
-function App() {
+export default function App() {
   return <Home />;
 }
-
-export default App;

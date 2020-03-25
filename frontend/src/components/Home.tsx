@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect } from "react";
 import Gallery from "react-photo-gallery";
 
 import axios from "axios";
@@ -24,13 +24,10 @@ export default function Home() {
 
   function fetchPhotos() {
     const pageURL = `?page=${pageNum}&pageSize=${pageSize}`;
-    axios.get(API_URL + pageURL).then(
-      res =>
-        setData({
-          photos: res.data.results,
-          count: res.data.count,
-        }), // eslint-disable-line
-    );
+    axios.get(API_URL + pageURL).then(res => setData({
+      photos: res.data.results,
+      count: res.data.count,
+    }));
   }
 
   useEffect(() => {
@@ -45,9 +42,8 @@ export default function Home() {
     setPageNum(selectedPageNum);
   }
 
-  function handlePageSizeChange(e: ChangeEvent<HTMLSelectElement>) {
+  function handlePageSizeChange(e: React.ChangeEvent<HTMLSelectElement>) {
     setPageNum(1);
-    // const target = e.target as HTMLTextAreaElement;
     setPageSize(+e.target.value);
   }
 
@@ -67,14 +63,12 @@ export default function Home() {
   function getPhotos() {
     const grayscaleURL = color ? "" : "?grayscale";
     const galleryPhotos: galleryPhotoFormat[] = [];
-    data.photos.map((photo: incomingPhotoFormat) =>
-      galleryPhotos.push({
-        src: photo.url + grayscaleURL,
-        width: photo.width,
-        height: photo.height,
-        id: photo.photo_id,
-      }),
-    );
+    data.photos.map((photo: incomingPhotoFormat) => galleryPhotos.push({
+      src: photo.url + grayscaleURL,
+      width: photo.width,
+      height: photo.height,
+      id: photo.photo_id,
+    }));
     // console.log(galleryPhotos);
 
     return <Gallery photos={galleryPhotos} />;
