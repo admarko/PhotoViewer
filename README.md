@@ -25,7 +25,17 @@ Along with some other tools for development:
 - [Sider](https://sider.review/dashboard) (online code linter that integrats with github for javascript and css: [eslint](https://eslint.org/) and [stylelint](https://stylelint.io/))
 - [Refined GitHub](https://github.com/sindresorhus/refined-github) (Chrome extension for additional git shortcuts)
 
+## Other:
 
+This project consists of 1 management command used to reset the DB if you want to replace your own photos using this gallery. To do so, you just need to:
+1. Add a .csv of the urls of the images into the `backend/` directory. And then
+2. (From inside the virtual environment) run `python manage.py reset_db [your_csv_filename.csv]`
+
+Note: This will clear the current DB and replace it with your own. The script would need to be modified if you wanted to just add in more photos. Also, the script expects the url of your photos to be structured as such:
+```
+https://picsum.photos/id/{id}/{width}/{height}
+```
+The script would need to be modified to handle photos inputted any different way.
 
 TODO:
 - turn off api view in settings
