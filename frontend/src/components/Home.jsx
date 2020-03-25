@@ -22,11 +22,9 @@ export default function Home() {
 
   function fetchPhotos() {
     const pageURL = `?page=${pageNum}&pageSize=${pageSize}`;
-    axios
-      .get(API_URL + pageURL)
-      .then(res =>
-        setData({ photos: res.data.results, count: res.data.count }),
-      );
+    axios.get(API_URL + pageURL).then(
+      res => setData({ photos: res.data.results, count: res.data.count }), // eslint-disable-line
+    );
   }
 
   useEffect(() => {
