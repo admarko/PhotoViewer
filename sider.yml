@@ -5,6 +5,7 @@ linter:
     ext: ".js,.jsx, .ts, .tsx"
   stylelint:
     config: frontend/.stylelintrc.json
+    root_dir: "frontend/"
     syntax: sugarss
     ignore-path: .gitignore
     ignore-disables: true
