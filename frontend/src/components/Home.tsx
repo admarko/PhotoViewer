@@ -31,12 +31,10 @@ export default function Home() {
 
   function fetchPhotos() {
     const pageURL = `?page=${pageNum}&pageSize=${pageSize}`;
-    axios.get(API_URL + pageURL).then(res =>
-      setData({
-        photos: res.data.results,
-        count: res.data.count,
-      }),
-    );
+    axios.get(API_URL + pageURL).then(res => setData({
+      photos: res.data.results,
+      count: res.data.count,
+    }));
   }
 
   useEffect(() => {
@@ -59,12 +57,10 @@ export default function Home() {
   function getPhotos() {
     const grayscaleURL = color ? "" : "?grayscale";
     const galleryPhotos: photoFormat[] = [];
-    data.photos.map((photo: photoFormat) =>
-      galleryPhotos.push({
-        ...photo,
-        src: photo.src + grayscaleURL,
-      }),
-    );
+    data.photos.map((photo: photoFormat) => galleryPhotos.push({
+      ...photo,
+      src: photo.src + grayscaleURL,
+    }));
     return <Gallery photos={galleryPhotos} />;
   }
 
