@@ -15,6 +15,7 @@
     "prettier": "^2.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-photo-gallery": "^8.0.0",
     "react-scripts": "3.4.1",
     "react-switch": "^5.0.1",
     "typescript": "^3.8.3"
