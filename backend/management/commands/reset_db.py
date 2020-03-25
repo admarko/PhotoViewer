@@ -27,6 +27,6 @@ class Command(BaseCommand):
                     photo_id=int(args[0]),
                     width=int(args[1]),
                     height=int(args[2]),
-                    url=url,
+                    src=url,
                 )
                 photo.save()

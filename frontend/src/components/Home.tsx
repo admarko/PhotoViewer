@@ -6,6 +6,13 @@ import Switch from "react-switch";
 
 import { API_URL } from "../constants";
 
+type photoFormat = {
+  src: string;
+  width: number;
+  height: number;
+  photo_id: number;
+};
+
 export default function Home() {
   const [data, setData] = useState({
     photos: [],
@@ -24,10 +31,12 @@ export default function Home() {
 
   function fetchPhotos() {
     const pageURL = `?page=${pageNum}&pageSize=${pageSize}`;
-    axios.get(API_URL + pageURL).then(res => setData({
-      photos: res.data.results,
-      count: res.data.count,
-    }));
+    axios.get(API_URL + pageURL).then(res =>
+      setData({
+        photos: res.data.results,
+        count: res.data.count,
+      }),
+    );
   }
 
   useEffect(() => {
@@ -47,30 +56,15 @@ export default function Home() {
     setPageSize(+e.target.value);
   }
 
-  type galleryPhotoFormat = {
-    src: string;
-    width: number;
-    height: number;
-    id: number;
-  };
-  type incomingPhotoFormat = {
-    url: string;
-    width: number;
-    height: number;
-    photo_id: number;
-  };
-
   function getPhotos() {
     const grayscaleURL = color ? "" : "?grayscale";
-    const galleryPhotos: galleryPhotoFormat[] = [];
-    data.photos.map((photo: incomingPhotoFormat) => galleryPhotos.push({
-      src: photo.url + grayscaleURL,
-      width: photo.width,
-      height: photo.height,
-      id: photo.photo_id,
-    }));
-    // console.log(galleryPhotos);
-
+    const galleryPhotos: photoFormat[] = [];
+    data.photos.map((photo: photoFormat) =>
+      galleryPhotos.push({
+        ...photo,
+        src: photo.src + grayscaleURL,
+      }),
+    );
     return <Gallery photos={galleryPhotos} />;
   }
 
