@@ -10,7 +10,7 @@ from .serializers import PhotoSerializer
 
 
 class BasicPagination(PageNumberPagination):
-    page_size_query_param = "limit"
+    page_size_query_param = "pageSize"
 
 
 # DEPRICATED:
@@ -35,6 +35,7 @@ class PhotosList(APIView, PaginationHandlerMixin):
 
     def get(self, request, *args, **kwargs):
         photos = Photo.objects.all()
+        self.pagination_class.page_size = 3
         page = self.paginate_queryset(photos)
         if page is not None:
             serializer = self.get_paginated_response(

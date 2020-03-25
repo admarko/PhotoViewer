@@ -1,0 +1,14 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "indentation": 2,
+    "number-leading-zero": null,
+    "font-weight-notation": "numeric",
+    "string-quotes": null,
+    "order/properties-alphabetical-order": null,
+    "color-named": null,
+    "scss/at-import-no-partial-leading-underscore": null,
+    "scss/at-import-partial-extension-blacklist": null,
+    "length-zero-no-unit": null
+  }
+}

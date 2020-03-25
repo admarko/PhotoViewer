@@ -11,68 +11,82 @@ export default function Home() {
   const [data, setData] = useState({ photos: [], count: 0 });
   const [color, setColor] = useState(true);
   const [pageNum, setPageNum] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
+  const pageSizeOptions = [10, 20, 30, 40, 50];
+  const numPages = Math.ceil(data.count / pageSize);
+  const pageLinks = [];
+  for (let i = 1; i < numPages + 1; i += 1) {
+    pageLinks.push(i);
+  }
 
   function fetchPhotos() {
-    const pageURL = "?page=" + pageNum;
-    axios
-      .get(API_URL + pageURL)
-      .then(res =>
-        setData({ photos: res.data.results, count: res.data.count })
-      );
+    const pageURL = `?page=${pageNum}&pageSize=${pageSize}`;
+    axios.get(API_URL + pageURL).then(
+      res => setData({ photos: res.data.results, count: res.data.count }), // eslint-disable-line
+    );
   }
 
   useEffect(() => {
     fetchPhotos();
-  }, [pageNum]);
+  }, [pageSize, pageNum]); // eslint-disable-line
 
   function toggleColor() {
     setColor(!color);
+  }
+
+  function handlePageChange(selectedPageNum) {
+    setPageNum(selectedPageNum);
+  }
+
+  function handlePageSizeChange(e) {
+    setPageNum(1);
+    setPageSize(e.target.value);
   }
 
   function getPhotos() {
     const grayscaleURL = color ? "" : "?grayscale";
     return (
       <div>
-        {data.photos.map(photo => {
-          return (
-            <Photo
-              key={photo.photo_id + photo.height + photo.width}
-              url={photo.url + grayscaleURL}
-              height={photo.height}
-              width={photo.width}
-              photoId={photo.photo_id}
-            />
-          );
-        })}
+        {data.photos.map(photo => (
+          <Photo
+            key={photo.photo_id + photo.height + photo.width}
+            url={photo.url + grayscaleURL}
+            height={photo.height}
+            width={photo.width}
+            photoId={photo.photo_id}
+          />
+        ))}
       </div>
     );
   }
 
-  const picsPerPage = 10;
-  const numPages = data.count / picsPerPage;
-  let pageLinks = [];
-  for (let i = 1; i < numPages + 1; i++) {
-    pageLinks.push(i);
-  }
-
-  function PageScroll(pageNum) {
-    const currentPageNum = pageNum.pageNum;
+  function PageScroll(currPage) {
+    const currentPageNum = currPage.pageNum;
     if (currentPageNum === 1) {
       return (
-        <span onClick={() => setPageNum(currentPageNum + 1)}>Next Page</span>
-      );
-    } else if (currentPageNum === numPages) {
-      return (
-        <span onClick={() => setPageNum(currentPageNum - 1)}>Prev Page</span>
-      );
-    } else {
-      return (
-        <div>
-          <span onClick={() => setPageNum(currentPageNum - 1)}>Prev Page</span>{" "}
-          <span onClick={() => setPageNum(currentPageNum + 1)}>Next Page</span>
-        </div>
+        <span onClick={() => handlePageChange(currentPageNum + 1)}>
+          Next Page
+        </span>
       );
     }
+    if (currentPageNum === numPages) {
+      return (
+        <span onClick={() => handlePageChange(currentPageNum - 1)}>
+          Prev Page
+        </span>
+      );
+    }
+    return (
+      <div>
+        <span onClick={() => handlePageChange(currentPageNum - 1)}>
+          Prev Page
+        </span>{" "}
+        <span onClick={() => handlePageChange(currentPageNum + 1)}>
+          Next Page
+        </span>
+      </div>
+    );
   }
 
   return (
@@ -81,19 +95,29 @@ export default function Home() {
         <Switch onChange={toggleColor} checked={color} />
       </div>
       <div>
-        Page{" "}
-        {pageLinks.map(pageLink => {
-          return (
-            <span onClick={() => setPageNum(pageLink)} key={pageLink}>
-              {pageLink + " "}
-            </span>
-          );
-        })}
+        <span htmlFor="picsPerPage">Pics per page: </span>
+        <select id="picsPerPage" onChange={handlePageSizeChange}>
+          {pageSizeOptions.map(picsPerPage => (
+            <option value={picsPerPage} key={picsPerPage}>
+              {picsPerPage}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        Page:{" "}
+        {pageLinks.map(pageLink => (
+          <span onClick={() => handlePageChange(pageLink)} key={pageLink}>
+            {`${pageLink} `}
+          </span>
+        ))}
       </div>
       {getPhotos()}
-      <div>
-        <PageScroll pageNum={pageNum} />
-      </div>
+      {numPages !== 1 && (
+        <div>
+          <PageScroll pageNum={pageNum} />
+        </div>
+      )}
     </div>
   );
 }

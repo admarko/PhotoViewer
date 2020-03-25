@@ -1,4 +1,14 @@
 linter:
   eslint:
-    dir: "frontend/src/"
+    root_dir: "frontend/"
+    dir: "src/"
     ext: ".js,.jsx, .ts, .tsx"
+  stylelint:
+    config: .stylelintrc.json
+    root_dir: "frontend/"
+    syntax: sugarss
+    ignore-path: .gitignore
+    ignore-disables: true
+    report-needless-disables: true
+    quiet: true
+    glob: "**/*.{css,scss}"
