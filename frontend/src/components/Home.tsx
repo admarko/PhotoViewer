@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
+import Gallery from "react-photo-gallery";
 
 import axios from "axios";
 import Switch from "react-switch";
 
-import Photo from "./Photo";
-
 import { API_URL } from "../constants";
 
 export default function Home() {
-  const [data, setData] = useState({ photos: [], count: 0 });
+  const [data, setData] = useState({
+    photos: [],
+    count: 0,
+  });
   const [color, setColor] = useState(true);
   const [pageNum, setPageNum] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -22,9 +24,10 @@ export default function Home() {
 
   function fetchPhotos() {
     const pageURL = `?page=${pageNum}&pageSize=${pageSize}`;
-    axios.get(API_URL + pageURL).then(
-      res => setData({ photos: res.data.results, count: res.data.count }), // eslint-disable-line
-    );
+    axios.get(API_URL + pageURL).then(res => setData({
+      photos: res.data.results,
+      count: res.data.count,
+    }));
   }
 
   useEffect(() => {
@@ -35,33 +38,43 @@ export default function Home() {
     setColor(!color);
   }
 
-  function handlePageChange(selectedPageNum) {
+  function handlePageChange(selectedPageNum: number) {
     setPageNum(selectedPageNum);
   }
 
-  function handlePageSizeChange(e) {
+  function handlePageSizeChange(e: React.ChangeEvent<HTMLSelectElement>) {
     setPageNum(1);
-    setPageSize(e.target.value);
+    setPageSize(+e.target.value);
   }
+
+  type galleryPhotoFormat = {
+    src: string;
+    width: number;
+    height: number;
+    id: number;
+  };
+  type incomingPhotoFormat = {
+    url: string;
+    width: number;
+    height: number;
+    photo_id: number;
+  };
 
   function getPhotos() {
     const grayscaleURL = color ? "" : "?grayscale";
-    return (
-      <div>
-        {data.photos.map(photo => (
-          <Photo
-            key={photo.photo_id + photo.height + photo.width}
-            url={photo.url + grayscaleURL}
-            height={photo.height}
-            width={photo.width}
-            photoId={photo.photo_id}
-          />
-        ))}
-      </div>
-    );
+    const galleryPhotos: galleryPhotoFormat[] = [];
+    data.photos.map((photo: incomingPhotoFormat) => galleryPhotos.push({
+      src: photo.url + grayscaleURL,
+      width: photo.width,
+      height: photo.height,
+      id: photo.photo_id,
+    }));
+    // console.log(galleryPhotos);
+
+    return <Gallery photos={galleryPhotos} />;
   }
 
-  function PageScroll(currPage) {
+  function PageScroll(currPage: { pageNum: number }) {
     const currentPageNum = currPage.pageNum;
     if (currentPageNum === 1) {
       return (
@@ -95,7 +108,7 @@ export default function Home() {
         <Switch onChange={toggleColor} checked={color} />
       </div>
       <div>
-        <span htmlFor="picsPerPage">Pics per page: </span>
+        <span>Pics per page: </span>
         <select id="picsPerPage" onChange={handlePageSizeChange}>
           {pageSizeOptions.map(picsPerPage => (
             <option value={picsPerPage} key={picsPerPage}>

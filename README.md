@@ -20,10 +20,11 @@ This project was bult using:
 * [React](https://reactjs.org)
 * [Python](https://www.python.org/)
 * [Django](http://djangoproject.org/)
-Along with some other tools for development:
+Along with some other tools:
 - [pre-commit](https://pre-commit.com/) hooks (for python: [black](https://github.com/psf/black), [flake8](https://flake8.pycqa.org/en/latest/), and [isort](https://github.com/asottile/seed-isort-config))
 - [Sider](https://sider.review/dashboard) (online code linter that integrats with github for javascript and css: [eslint](https://eslint.org/) and [stylelint](https://stylelint.io/))
 - [Refined GitHub](https://github.com/sindresorhus/refined-github) (Chrome extension for additional git shortcuts)
+- [React Photo Gallery](https://neptunian.github.io/react-photo-gallery/#) to handle the grid-like responsive layout. This tool uses the (Knuth and Plass line breaking algorithm)[http://blog.vjeux.com/2014/image/google-plus-layout-find-best-breaks.html] to best determine how the photos should be laid out.
 
 ## Other:
 
@@ -44,3 +45,6 @@ TODO:
 - add filtering on images
 - single select photo
 - venv/requirements thing (then readme)
+
+
+https://blog.logrocket.com/creating-an-app-with-react-and-django/
