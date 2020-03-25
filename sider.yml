@@ -4,7 +4,7 @@ linter:
     dir: "src/"
     ext: ".js,.jsx, .ts, .tsx"
   stylelint:
-    config: frontend/.stylelintrc.json
+    config: .stylelintrc.json
     root_dir: "frontend/"
     syntax: sugarss
     ignore-path: .gitignore
