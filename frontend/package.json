@@ -17,7 +17,8 @@
     "react-dom": "^16.13.1",
     "react-photo-gallery": "^8.0.0",
     "react-scripts": "3.4.1",
-    "react-switch": "^5.0.1"
+    "react-switch": "^5.0.1",
+    "ts-react-feather-icons": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
