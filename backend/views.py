@@ -6,35 +6,27 @@ from rest_framework.views import APIView
 
 from .models import Photo
 from .paginators import PaginationHandlerMixin
-from .serializers import PhotoSerializer
+from .serializers import DimensionSerializer, PhotoSerializer
 
 
 class BasicPagination(PageNumberPagination):
     page_size_query_param = "pageSize"
 
 
-# DEPRICATED:
-# @api_view(["GET"])
-# def photos_list(request):
-#     if request.method == "GET":
-#         photos = Photo.objects.all()
-#         serialized_photos = PhotoSerializer(
-#             photos, context={"reqest": request}, many=True
-#         )
-#         pagination_class = BasicPagination
-
-
-#         return Response(serialized_photos.data)
-#     else:
-#         return Response(status=status.HTTP_400_BAD_REQUEST)
-
-
 class PhotosList(APIView, PaginationHandlerMixin):
     serializer_class = PhotoSerializer
     pagination_class = BasicPagination
 
+    def get_queryset(self):
+        queryset = Photo.objects.all()
+        height = self.request.query_params.get("height", None)
+        width = self.request.query_params.get("width", None)
+        if height is not None and width is not None:
+            queryset = queryset.filter(width=width).filter(height=height)
+        return queryset
+
     def get(self, request, *args, **kwargs):
-        photos = Photo.objects.all()
+        photos = self.get_queryset()
         page = self.paginate_queryset(photos)
         if page is not None:
             serializer = self.get_paginated_response(
@@ -46,11 +38,12 @@ class PhotosList(APIView, PaginationHandlerMixin):
 
 
 @api_view(["GET"])
-def photo(request, photo_id):
+def photo_dimensions(request):
     try:
-        photo = Photo.objects.get(photo_id=photo_id)
-        serialized_photo = PhotoSerializer(photo, context={"reqest": request})
-        return Response(serialized_photo.data)
-
+        dimensions = Photo.objects.order_by().values("height", "width").distinct()
+        serialized_dimensions = DimensionSerializer(
+            dimensions, context={"request": request}, many=True
+        )
+        return Response(serialized_dimensions.data)
     except Photo.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
