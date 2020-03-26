@@ -17,6 +17,11 @@ type photoFormat = {
   photo_id: number;
 };
 
+type dimensionFormat = {
+  height: number;
+  width: number;
+};
+
 export default function Home() {
   const [data, setData] = useState({
     photos: [],
@@ -25,6 +30,8 @@ export default function Home() {
   const [color, setColor] = useState(true);
   const [pageNum, setPageNum] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [allDimensions, setAllDimensions] = useState([]);
+  const [selectedDimension, setSelectedDimension] = useState("");
 
   const pageSizeOptions = [10, 20, 30, 40, 50];
   const numPages = Math.ceil(data.count / pageSize);
@@ -33,8 +40,20 @@ export default function Home() {
     pageLinks.push(i);
   }
 
+  function fetchDimensions() {
+    axios.get(`${API_URL}/dimensions`).then(res => setAllDimensions(res.data));
+  }
+  useEffect(() => {
+    fetchDimensions();
+  }, []);
+
   function fetchPhotos() {
-    const pageURL = `?page=${pageNum}&pageSize=${pageSize}`;
+    let dimensionURL = "";
+    if (selectedDimension !== "") {
+      const dims = selectedDimension.split(" x ");
+      dimensionURL = `&width=${dims[0]}&height=${dims[1]}`;
+    }
+    const pageURL = `?page=${pageNum}&pageSize=${pageSize}${dimensionURL}`;
     axios.get(API_URL + pageURL).then(res => setData({
       photos: res.data.results,
       count: res.data.count,
@@ -43,7 +62,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchPhotos();
-  }, [pageSize, pageNum]); // eslint-disable-line
+  }, [pageSize, pageNum, selectedDimension]); // eslint-disable-line
 
   function toggleColor() {
     setColor(!color);
@@ -56,6 +75,10 @@ export default function Home() {
   function handlePageSizeChange(e: React.ChangeEvent<HTMLSelectElement>) {
     setPageNum(1);
     setPageSize(+e.target.value);
+  }
+
+  function handleDimensionChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    setSelectedDimension(e.target.value);
   }
 
   function getPhotos() {
@@ -116,6 +139,21 @@ export default function Home() {
           ))}
         </select>
       </div>
+      <div>
+        <span>Specific Dimensions: </span>
+        <select id="dimensions" onChange={handleDimensionChange}>
+          <option value="" label="N/A" />
+          {allDimensions.map((dimension: dimensionFormat) => {
+            const combinedDimension = `${dimension.width} x ${dimension.height}`;
+            return (
+              <option value={combinedDimension} key={combinedDimension}>
+                {combinedDimension}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+
       <div className="photo-container">{getPhotos()}</div>
       <div className="footer">
         <div className="page-links">
