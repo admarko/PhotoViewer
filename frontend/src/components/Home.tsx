@@ -1,15 +1,14 @@
-import React, { useState, useEffect, useCallback } from "react";
-import Gallery from "react-photo-gallery";
-import Carousel, { Modal, ModalGateway } from "react-images";
+import "./__styles__/Home.scss";
 
 import axios from "axios";
+import classnames from "classnames";
+import React, { useCallback, useEffect, useState } from "react";
+import Carousel, { Modal, ModalGateway } from "react-images";
+import Gallery from "react-photo-gallery";
 import Switch from "react-switch";
 import { Icon } from "ts-react-feather-icons";
-import classnames from "classnames";
 
 import { API_URL } from "../constants";
-
-import "./__styles__/Home.scss";
 
 type photoFormat = {
   src: string;
