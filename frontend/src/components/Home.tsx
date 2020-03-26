@@ -4,8 +4,11 @@ import Gallery from "react-photo-gallery";
 import axios from "axios";
 import Switch from "react-switch";
 import { Icon } from "ts-react-feather-icons";
+import classnames from "classnames";
 
 import { API_URL } from "../constants";
+
+import "./__styles__/Home.scss";
 
 type photoFormat = {
   src: string;
@@ -68,12 +71,18 @@ export default function Home() {
   function PageScroll(currPage: { pageNum: number }) {
     const currentPageNum = currPage.pageNum;
     const nextPage = (
-      <span onClick={() => handlePageChange(currentPageNum + 1)}>
+      <span
+        onClick={() => handlePageChange(currentPageNum + 1)}
+        className="scroll-button"
+      >
         Next Page <Icon name="chevrons-right" color="black" size={20} />
       </span>
     );
     const prevPage = (
-      <span onClick={() => handlePageChange(currentPageNum - 1)}>
+      <span
+        onClick={() => handlePageChange(currentPageNum - 1)}
+        className="scroll-button"
+      >
         <Icon name="chevrons-left" color="black" size={20} />
         Prev Page{" "}
       </span>
@@ -93,7 +102,7 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <div className="app-container">
       <div>
         <Switch onChange={toggleColor} checked={color} />
       </div>
@@ -107,21 +116,30 @@ export default function Home() {
           ))}
         </select>
       </div>
-      <div>{getPhotos()}</div>
-      <div>
+      <div className="photo-container">{getPhotos()}</div>
+      <div className="footer">
+        <div className="page-links">
+          Page:{" "}
+          {pageLinks.map(pageLink => {
+            const pageLinkStyle = classnames("page-link", {
+              selected: pageLink === pageNum,
+            });
+            return (
+              <span
+                onClick={() => handlePageChange(pageLink)}
+                key={pageLink}
+                className={pageLinkStyle}
+              >
+                {pageLink}
+              </span>
+            );
+          })}
+        </div>
         {numPages !== 1 && (
-          <div>
+          <div className="page-scroll">
             <PageScroll pageNum={pageNum} />
           </div>
         )}
-        <div>
-          Page:{" "}
-          {pageLinks.map(pageLink => (
-            <span onClick={() => handlePageChange(pageLink)} key={pageLink}>
-              {`${pageLink} `}
-            </span>
-          ))}
-        </div>
       </div>
     </div>
   );
