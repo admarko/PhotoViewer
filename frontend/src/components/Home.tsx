@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from "react";
-import Gallery from "react-photo-gallery";
+import "./__styles__/Home.scss";
 
 import axios from "axios";
+import classnames from "classnames";
+import React, { useCallback, useEffect, useState } from "react";
+import Carousel, { Modal, ModalGateway } from "react-images";
+import Gallery from "react-photo-gallery";
 import Switch from "react-switch";
 import { Icon } from "ts-react-feather-icons";
-import classnames from "classnames";
 
 import { API_URL } from "../constants";
-
-import "./__styles__/Home.scss";
 
 type photoFormat = {
   src: string;
   width: number;
   height: number;
   photo_id: number;
+  srcSet: string[];
+  source: string;
 };
 
 type dimensionFormat = {
@@ -43,6 +45,7 @@ export default function Home() {
   function fetchDimensions() {
     axios.get(`${API_URL}/dimensions`).then(res => setAllDimensions(res.data));
   }
+
   useEffect(() => {
     fetchDimensions();
   }, []);
@@ -81,6 +84,19 @@ export default function Home() {
     setSelectedDimension(e.target.value);
   }
 
+  const [currentImage, setCurrentImage] = useState(0);
+  const [viewerIsOpen, setViewerIsOpen] = useState(false);
+
+  const openLightbox = useCallback((event, { index }) => {
+    setCurrentImage(index);
+    setViewerIsOpen(true);
+  }, []);
+
+  const closeLightbox = () => {
+    setCurrentImage(0);
+    setViewerIsOpen(false);
+  };
+
   function getPhotos() {
     const grayscaleURL = color ? "" : "?grayscale";
     const galleryPhotos: photoFormat[] = [];
@@ -88,7 +104,18 @@ export default function Home() {
       ...photo,
       src: photo.src + grayscaleURL,
     }));
-    return <Gallery photos={galleryPhotos} />;
+    return (
+      <div>
+        <Gallery photos={galleryPhotos} onClick={openLightbox} />;
+        <ModalGateway>
+          {viewerIsOpen ? (
+            <Modal onClose={closeLightbox}>
+              <Carousel currentIndex={currentImage} views={galleryPhotos} />
+            </Modal>
+          ) : null}
+        </ModalGateway>
+      </div>
+    );
   }
 
   function PageScroll(currPage: { pageNum: number }) {
