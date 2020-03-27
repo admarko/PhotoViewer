@@ -1,7 +1,6 @@
 @import "./_shared.scss";
 
 .footer {
-  padding-bottom: 35px;
   border-top: 2px $gray solid;
   margin-top: 40px;
 }
@@ -51,4 +50,9 @@
 .scroll-button:hover {
   background-color: pink;
   color: black;
+}
+
+.name {
+  padding-left: 20px;
+  padding-bottom: 10px;
 }
