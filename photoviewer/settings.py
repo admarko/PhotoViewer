@@ -56,10 +56,11 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-# TODO: uncomment this to turn off api view
+
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
+    # Before pushing to production, uncomment this to turn off API view
     #     'DEFAULT_RENDERER_CLASSES': (
     #         'rest_framework.renderers.JSONRenderer',
     #     )
