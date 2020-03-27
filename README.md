@@ -8,8 +8,8 @@ This is a simple photo viewer app built using the Django REST framework and Reac
 
 
 ## Getting started
-1. Clone the project to your machine ```[git clone https://github.com/admarko/PhotoViewer]```
-2. Navigate into the directory ```[cd PhotoViewer]```
+1. Clone the project to your machine `git clone https://github.com/admarko/PhotoViewer`
+2. Navigate into the directory `cd PhotoViewer`
 
 - run `python manage.py runserver`
 - in a new terminal tab, `cd` into `/frontend` and run `npm start`
@@ -45,10 +45,8 @@ TODO:
 - venv/requirements thing (then readme)
 
 
-https://blog.logrocket.com/creating-an-app-with-react-and-django/
 
-### Django Admin credentials (fill in blanks):
-
-un: my_name.lowercase()
-
-pw: P__sw__d1_3[Bang]
+### Django Admin credentials
+Fill in the blanks...
+- un: my_name.lowercase()
+- pw: P__sw__d1_3[Bang]
