@@ -8,21 +8,23 @@ This is a simple photo viewer app built using the Django REST framework and Reac
 
 
 ## Build and Start the Application
-1. Clone the project to your machine `git clone https://github.com/admarko/PhotoViewer`
+1. Clone the project to your machine: `git clone https://github.com/admarko/PhotoViewer`
 2. Navigate into the directory: `cd PhotoViewer`
 3. Source the virtual environment: `pipenv shell` (You will need to have `pipenv` installed by this point)
 4. Install the dependencies: `pipenv install`
-5. Run the migrations `python manage.py migrate`
+5. Run the migrations: `python manage.py migrate`
 6. Start up the server: `python manage.py runserver`
 
 At this point, you can navigate to http://localhost:8000/api/photos to see the API that the frontend will access.
 
 7. Keeping that terminal tab running, open a new terminal tab and go into the `frontend/` directory: `cd [path_to_dir]/frontend/`
 8. Install the dependencies: `npm install`
-9. In your web browser, go to http://localhost:3000 and enjoy! :)
+9. Lastly, start the app: `npm start`
+
+In your web browser, go to http://localhost:3000 and enjoy! :)
 
 ## Built With:
-This project was bult using:
+This project was built using:
 * [TypeScript](https://www.typescriptlang.org/) with [React](https://reactjs.org), and
 * [Python](https://www.python.org/) with [Django](http://djangoproject.org/)
 
