@@ -31,9 +31,10 @@ export default function Header(props: Props) {
 
   return (
     <div className="header">
+      <div className="title">Photo Viewer App</div>
       <div className="filters">
-        <div>
-          Toggle Greyscale:{" "}
+        <div className="filter greyscale">
+          <span className="greyscale-text">Toggle Greyscale:</span>
           <Switch
             onChange={toggleColor}
             checked={color}
@@ -41,8 +42,8 @@ export default function Header(props: Props) {
             width={40}
           />
         </div>
-        <div>
-          <span>Sort by Size: </span>
+        <div className="filter">
+          <span>| Sort by Size: </span>
           <select id="dimensions" onChange={handleDimensionChange}>
             <option value="" label="All" />
             {allDimensions.map((dimension: dimensionFormat) => {
@@ -55,8 +56,8 @@ export default function Header(props: Props) {
             })}
           </select>
         </div>
-        <div>
-          <span>Pics per page: </span>
+        <div className="filter">
+          <span>| Pics per page: </span>
           <select id="picsPerPage" onChange={handlePageSizeChange}>
             {pageSizeOptions.map(picsPerPage => (
               <option
