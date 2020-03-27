@@ -48,3 +48,7 @@ TODO:
 
 
 https://blog.logrocket.com/creating-an-app-with-react-and-django/
+
+Django Admin credentials (fill in blanks):
+un: my_name.lowercase()
+pw: P__sw__d1_3[Bang]
