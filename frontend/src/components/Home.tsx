@@ -75,6 +75,7 @@ export default function Home() {
   }
 
   function handleDimensionChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    setPageNum(1);
     setSelectedDimension(e.target.value);
   }
 
