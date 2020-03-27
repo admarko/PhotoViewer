@@ -30,7 +30,7 @@ export default function Footer(props: Props) {
         className="scroll-button"
       >
         <Icon name="chevrons-left" color="black" size={20} />
-        Prev Page{" "}
+        Prev Page
       </span>
     );
 
