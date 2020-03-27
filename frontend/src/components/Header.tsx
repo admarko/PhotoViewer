@@ -11,6 +11,7 @@ type Props = {
   handlePageSizeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   pageSizeOptions: number[];
   pageSize: number;
+  count: number;
 };
 
 type dimensionFormat = {
@@ -27,6 +28,7 @@ export default function Header(props: Props) {
     handlePageSizeChange,
     pageSizeOptions,
     pageSize,
+    count,
   } = props;
 
   return (
@@ -40,10 +42,11 @@ export default function Header(props: Props) {
             checked={color}
             height={20}
             width={40}
+            onColor="#1271ff"
           />
         </div>
         <div className="filter">
-          <span>| Sort by Size: </span>
+          <span> | Sort by Size: </span>
           <select id="dimensions" onChange={handleDimensionChange}>
             <option value="" label="All" />
             {allDimensions.map((dimension: dimensionFormat) => {
@@ -54,10 +57,11 @@ export default function Header(props: Props) {
                 </option>
               );
             })}
-          </select>
+          </select>{" "}
+          ({count})
         </div>
         <div className="filter">
-          <span>| Pics per page: </span>
+          <span> | Pics per Page: </span>
           <select id="picsPerPage" onChange={handlePageSizeChange}>
             {pageSizeOptions.map(picsPerPage => (
               <option

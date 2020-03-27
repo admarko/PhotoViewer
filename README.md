@@ -4,12 +4,23 @@ This is a simple photo viewer app built using the Django REST framework and Reac
 
 ## Requirements
 * Python3
-* Pipenv
+* Pipenv (`pip install pipenv` if you do not have)
 
 
-## Getting started
+## Build and Start the Application
 1. Clone the project to your machine `git clone https://github.com/admarko/PhotoViewer`
-2. Navigate into the directory `cd PhotoViewer`
+2. Navigate into the directory: `cd PhotoViewer`
+3. Source the virtual environment: `pipenv shell` (You will need to have `pipenv` installed by this point)
+4. Install the dependencies: `pipenv install`
+5. Run the migrations `python manage.py migrate`
+6. Start up the server: `python manage.py runserver`
+
+At this point, you can navigate to http://localhost:8000/api/photos to see the API that the frontend will access.
+
+7. Keeping that terminal tab running, open a new terminal tab and go into the `frontend/` directory: `cd frontend/`
+8. Install the dependencies: `npm install`
+9. In your web browser, go to http://localhost:3000 and enjoy! :)
+
 
 - run `python manage.py runserver`
 - in a new terminal tab, `cd` into `/frontend` and run `npm start`
@@ -34,17 +45,11 @@ This project consists of 1 management command used to reset the DB if you want t
 1. Add a .csv of the urls of the images into the `backend/` directory. And then
 2. (From inside the virtual environment) run `python manage.py reset_db [your_csv_filename.csv]`
 
-Note: This will clear the current DB and replace it with your own. The script would need to be modified if you wanted to just add in more photos. Also, the script expects the url of your photos to be structured as such:
+Note: This will clear the current DB and replace it with your own. The script would need to be modified if you wanted to just add in more photos. Also, the script expects the url of your photos to be structured exactly as such:
 ```
 https://picsum.photos/id/{id}/{width}/{height}
 ```
 The script would need to be modified to handle photos inputted any different way.
-
-TODO:
-- change all 404 pages
-- venv/requirements thing (then readme)
-
-
 
 ### Django Admin credentials
 Fill in the blanks...

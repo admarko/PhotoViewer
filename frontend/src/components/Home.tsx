@@ -122,6 +122,7 @@ export default function Home() {
         handlePageSizeChange={handlePageSizeChange}
         pageSizeOptions={pageSizeOptions}
         pageSize={pageSize}
+        count={data.count}
       />
 
       <div className="photo-container">{getPhotos()}</div>
