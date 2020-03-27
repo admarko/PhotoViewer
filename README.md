@@ -17,20 +17,14 @@ This is a simple photo viewer app built using the Django REST framework and Reac
 
 At this point, you can navigate to http://localhost:8000/api/photos to see the API that the frontend will access.
 
-7. Keeping that terminal tab running, open a new terminal tab and go into the `frontend/` directory: `cd frontend/`
+7. Keeping that terminal tab running, open a new terminal tab and go into the `frontend/` directory: `cd [path_to_dir]/frontend/`
 8. Install the dependencies: `npm install`
 9. In your web browser, go to http://localhost:3000 and enjoy! :)
 
-
-- run `python manage.py runserver`
-- in a new terminal tab, `cd` into `/frontend` and run `npm start`
-- navigate to http://localhost:3000/
-
 ## Built With:
 This project was bult using:
-* [React](https://reactjs.org)
-* [Python](https://www.python.org/)
-* [Django](http://djangoproject.org/)
+* [TypeScript](https://www.typescriptlang.org/) with [React](https://reactjs.org), and
+* [Python](https://www.python.org/) with [Django](http://djangoproject.org/)
 
 Along with some other tools:
 
@@ -54,4 +48,4 @@ The script would need to be modified to handle photos inputted any different way
 ### Django Admin credentials
 Fill in the blanks...
 - un: my_name.lowercase()
-- pw: P__sw__d1_3[Bang]
+- pw: P**sw**d1*3[Bang]

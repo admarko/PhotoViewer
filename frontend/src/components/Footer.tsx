@@ -73,7 +73,11 @@ export default function Footer(props: Props) {
       )}
       <div className="name">
         Built by{" "}
-        <a href="https://www.linkedin.com/in/admarko" target="_blank">
+        <a
+          href="https://www.linkedin.com/in/admarko"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Alex Markowitz
         </a>{" "}
         2020
