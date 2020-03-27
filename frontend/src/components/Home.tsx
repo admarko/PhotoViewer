@@ -1,14 +1,13 @@
 import "./__styles__/Home.scss";
 
 import axios from "axios";
-import classnames from "classnames";
 import React, { useCallback, useEffect, useState } from "react";
 import Carousel, { Modal, ModalGateway } from "react-images";
 import Gallery from "react-photo-gallery";
-import Switch from "react-switch";
-import { Icon } from "ts-react-feather-icons";
 
 import { API_URL } from "../constants";
+import Footer from "./Footer";
+import Header from "./Header";
 
 type photoFormat = {
   src: string;
@@ -19,11 +18,6 @@ type photoFormat = {
   source: string;
 };
 
-type dimensionFormat = {
-  height: number;
-  width: number;
-};
-
 export default function Home() {
   const [data, setData] = useState({
     photos: [],
@@ -31,7 +25,7 @@ export default function Home() {
   });
   const [color, setColor] = useState(true);
   const [pageNum, setPageNum] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(20);
   const [allDimensions, setAllDimensions] = useState([]);
   const [selectedDimension, setSelectedDimension] = useState("");
 
@@ -106,7 +100,7 @@ export default function Home() {
     }));
     return (
       <div>
-        <Gallery photos={galleryPhotos} onClick={openLightbox} />;
+        <Gallery photos={galleryPhotos} onClick={openLightbox} />
         <ModalGateway>
           {viewerIsOpen ? (
             <Modal onClose={closeLightbox}>
@@ -118,94 +112,26 @@ export default function Home() {
     );
   }
 
-  function PageScroll(currPage: { pageNum: number }) {
-    const currentPageNum = currPage.pageNum;
-    const nextPage = (
-      <span
-        onClick={() => handlePageChange(currentPageNum + 1)}
-        className="scroll-button"
-      >
-        Next Page <Icon name="chevrons-right" color="black" size={20} />
-      </span>
-    );
-    const prevPage = (
-      <span
-        onClick={() => handlePageChange(currentPageNum - 1)}
-        className="scroll-button"
-      >
-        <Icon name="chevrons-left" color="black" size={20} />
-        Prev Page{" "}
-      </span>
-    );
-
-    if (currentPageNum === 1) {
-      return nextPage;
-    }
-    if (currentPageNum === numPages) {
-      return prevPage;
-    }
-    return (
-      <div>
-        {prevPage} {nextPage}
-      </div>
-    );
-  }
-
   return (
     <div className="app-container">
-      <div>
-        <Switch onChange={toggleColor} checked={color} />
-      </div>
-      <div>
-        <span>Pics per page: </span>
-        <select id="picsPerPage" onChange={handlePageSizeChange}>
-          {pageSizeOptions.map(picsPerPage => (
-            <option value={picsPerPage} key={picsPerPage}>
-              {picsPerPage}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <span>Specific Dimensions: </span>
-        <select id="dimensions" onChange={handleDimensionChange}>
-          <option value="" label="N/A" />
-          {allDimensions.map((dimension: dimensionFormat) => {
-            const combinedDimension = `${dimension.width} x ${dimension.height}`;
-            return (
-              <option value={combinedDimension} key={combinedDimension}>
-                {combinedDimension}
-              </option>
-            );
-          })}
-        </select>
-      </div>
+      <Header
+        color={color}
+        toggleColor={toggleColor}
+        handleDimensionChange={handleDimensionChange}
+        allDimensions={allDimensions}
+        handlePageSizeChange={handlePageSizeChange}
+        pageSizeOptions={pageSizeOptions}
+        pageSize={pageSize}
+      />
 
       <div className="photo-container">{getPhotos()}</div>
-      <div className="footer">
-        <div className="page-links">
-          Page:{" "}
-          {pageLinks.map(pageLink => {
-            const pageLinkStyle = classnames("page-link", {
-              selected: pageLink === pageNum,
-            });
-            return (
-              <span
-                onClick={() => handlePageChange(pageLink)}
-                key={pageLink}
-                className={pageLinkStyle}
-              >
-                {pageLink}
-              </span>
-            );
-          })}
-        </div>
-        {numPages !== 1 && (
-          <div className="page-scroll">
-            <PageScroll pageNum={pageNum} />
-          </div>
-        )}
-      </div>
+
+      <Footer
+        pageLinks={pageLinks}
+        pageNum={pageNum}
+        handlePageChange={handlePageChange}
+        numPages={numPages}
+      />
     </div>
   );
 }

@@ -1,39 +1,5 @@
 @import "./_shared.scss";
 
-.app-container {
-  padding: 0px 20px;
-}
-
-.page-links {
-  text-align: right;
-}
-
-.page-link {
-  padding: 0px 2px;
-}
-
-.page-link:hover {
-  cursor: pointer;
-  text-decoration: underline;
-  color: blue;
-}
-
-.selected {
-  color: blue;
-  text-decoration: underline;
-}
-
-.page-scroll {
-  text-align: center;
-}
-
-.scroll-button {
-  background-color: pink;
-  border-radius: 5px;
-  margin: 8px;
-  padding: 8px;
-}
-.scroll-button:hover {
-  background-color: red;
-  color: white;
+.photo-container {
+  padding: 0px 70px;
 }
