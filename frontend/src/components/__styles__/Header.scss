@@ -1,0 +1,12 @@
+@import "./_shared.scss";
+
+.header {
+  border-bottom: 2px $gray solid;
+  margin-bottom: 40px;
+  padding-top: 60px;
+}
+
+.filters {
+  display: flex;
+  justify-content: flex-end;
+}
