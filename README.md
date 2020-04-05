@@ -51,3 +51,8 @@ The script would need to be modified to handle photos inputted any different way
 Fill in the blanks...
 - un: my_name.lowercase()
 - pw: P**sw**d1*3[Bang]
+
+
+#### TODO:
+
+- additional features such as request caching, image manipulation, error handling, and user authentication
