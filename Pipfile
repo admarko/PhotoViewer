@@ -34,7 +34,7 @@ virtualenv-clone = "==0.5.4"
 zipp = "==3.1.0"
 "aspy.refactor-imports" = "==2.1.0"
 Django = "==3.0.7"
-PyYAML = "==5.3.1"
+PyYAML = "==5.4"
 
 [requires]
 python_version = "3.6"
